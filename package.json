@@ -1,0 +1,34 @@
+{
+  "name": "simple-direct-democracy-backend",
+  "version": "0.0.1-alpha",
+  "description": "Fast and minimal backend for a simple direct democracy's suggestion and voting system.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon --exec node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pojntfx/simple-direct-democracy-backend.git"
+  },
+  "keywords": [
+    "direct-democracy",
+    "graphql",
+    "redis"
+  ],
+  "author": "Felicitas Pojtinger",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/pojntfx/simple-direct-democracy-backend/issues"
+  },
+  "homepage": "https://github.com/pojntfx/simple-direct-democracy-backend#readme",
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "nodemon": "^1.17.3"
+  },
+  "dependencies": {
+    "graphql-yoga": "^1.9.2",
+    "redis": "^2.8.0"
+  }
+}
