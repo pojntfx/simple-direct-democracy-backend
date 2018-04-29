@@ -1,41 +1,43 @@
 import { GraphQLServer } from "graphql-yoga";
-import redis from "redis";
-import { promisify } from "util";
+import mongoose from "mongoose";
 import { createProposal } from "./resolvers/createProposal";
+import { upvoteProposal } from "./resolvers/upvoteProposal";
+import { downvoteProposal } from "./resolvers/downvoteProposal";
+
+const dbPort = 27017;
+const serverPort = 3000;
 
 const typeDefs = `
 type Proposal {
-    title: String!
     text: String!
-    ip: String!
+    votes: Int!
+    upvoters: [String!]!
+    downvoters: [String!]!
+    author: String!
+    id: String!
 }
 type Query {
-    getProposal(id: String!): Proposal
-    getAllProposals: [Proposal]
+  getProposal(id: String!): Proposal
 }
 type Mutation {
-    createProposal(title: String!, text: String!, ip: String!): Proposal
-    updateProposal(id: String!, title: String!, text: String!): Proposal
-    deleteProposal(id: String!): String! # id
+  createProposal(text: String!, author: String!): Proposal!
+  upvoteProposal(id: String!): Proposal!,
+  downvoteProposal(id: String!): Proposal!
 }
 `;
 
 const resolvers = {
   Mutation: {
-    createProposal: (_, { title, text, ip }) =>
-      createProposal({ title, text, ip })
+    createProposal: (_, args) => createProposal(args),
+    upvoteProposal: (_, args) => upvoteProposal(args),
+    downvoteProposal: (_, args) => downvoteProposal(args)
   }
 };
 
-export const db = redis.createClient();
-export const hget = promisify(db.hget).bind(db);
-export const keys = promisify(db.keys).bind(db);
-export const hsetnx = promisify(db.hsetnx).bind(db);
+// Connect to the db
+mongoose.connect(`mongodb://127.0.0.1:${dbPort}`);
 
-const server = new GraphQLServer({ typeDefs, resolvers });
-
-db.set("aval", "string val", redis.print);
-
-server.start({ port: 3000 }, () =>
+// Start the api server
+new GraphQLServer({ typeDefs, resolvers }).start({ port: serverPort }, () =>
   console.log("Server is running on localhost:3000")
 );

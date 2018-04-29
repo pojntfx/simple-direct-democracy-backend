@@ -1,11 +1,22 @@
-import { db, hget, keys, hsetnx } from "../index";
+import { Proposal } from "../models/Proposal";
 
-export const createProposal = ({ title, text, ip }) => {
-  hsetnx(title, "text", text);
-  hsetnx(title, "ip", ip);
+export const createProposal = ({ text, author }) => {
+  const newProposal = new Proposal({
+    text,
+    votes: 0,
+    upvoters: [],
+    downvoters: [],
+    author
+  });
+
+  newProposal.save();
+
   return {
-    title: keys(title).then(title => title[0]),
-    text: hget(title, "text").then(text => text),
-    ip: hget(title, "ip").then(ip => ip)
+    text: newProposal.text,
+    votes: newProposal.votes,
+    upvoters: newProposal.upvoters,
+    downvoters: newProposal.downvoters,
+    author: newProposal.author,
+    id: newProposal._id
   };
 };
