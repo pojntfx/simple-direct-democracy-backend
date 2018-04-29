@@ -5,6 +5,7 @@ import { fileLoader, mergeTypes } from "merge-graphql-schemas";
 import { createProposal } from "./resolvers/createProposal";
 import { upvoteProposal } from "./resolvers/upvoteProposal";
 import { downvoteProposal } from "./resolvers/downvoteProposal";
+import { allProposals } from "./resolvers/allProposals";
 
 const dbPort = 27017;
 const serverPort = 3000;
@@ -12,10 +13,13 @@ const serverPort = 3000;
 const typeDefs = fileLoader(path.join(__dirname, "./typedefs"));
 
 const resolvers = {
+  Query: {
+    allProposals: () => allProposals()
+  },
   Mutation: {
     createProposal: (_, args) => createProposal(args),
     upvoteProposal: (_, args) => upvoteProposal(args),
-    downvoteProposal: (_, args) => downvoteProposal(args),
+    downvoteProposal: (_, args) => downvoteProposal(args)
   }
 };
 
