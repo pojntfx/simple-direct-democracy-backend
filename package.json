@@ -32,6 +32,6 @@
   },
   "dependencies": {
     "graphql-yoga": "^1.9.2",
-    "redis": "^2.8.0"
+    "mongoose": "^5.0.16"
   }
 }
