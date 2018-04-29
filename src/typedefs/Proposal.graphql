@@ -1,0 +1,18 @@
+type Proposal {
+  text: String!
+  votes: Int!
+  upvoters: [String!]!
+  downvoters: [String!]!
+  author: String!
+  id: String!
+}
+
+type Query {
+  getProposal(id: String!): Proposal
+}
+
+type Mutation {
+  createProposal(text: String!, author: String!): Proposal!
+  upvoteProposal(id: String!): Proposal!
+  downvoteProposal(id: String!): Proposal!
+}
