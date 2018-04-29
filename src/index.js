@@ -1,5 +1,7 @@
 import { GraphQLServer } from "graphql-yoga";
 import mongoose from "mongoose";
+import path from "path";
+import { fileLoader, mergeTypes } from "merge-graphql-schemas";
 import { createProposal } from "./resolvers/createProposal";
 import { upvoteProposal } from "./resolvers/upvoteProposal";
 import { downvoteProposal } from "./resolvers/downvoteProposal";
@@ -7,30 +9,13 @@ import { downvoteProposal } from "./resolvers/downvoteProposal";
 const dbPort = 27017;
 const serverPort = 3000;
 
-const typeDefs = `
-type Proposal {
-    text: String!
-    votes: Int!
-    upvoters: [String!]!
-    downvoters: [String!]!
-    author: String!
-    id: String!
-}
-type Query {
-  getProposal(id: String!): Proposal
-}
-type Mutation {
-  createProposal(text: String!, author: String!): Proposal!
-  upvoteProposal(id: String!): Proposal!,
-  downvoteProposal(id: String!): Proposal!
-}
-`;
+const typeDefs = fileLoader(path.join(__dirname, "./typedefs"));
 
 const resolvers = {
   Mutation: {
     createProposal: (_, args) => createProposal(args),
     upvoteProposal: (_, args) => upvoteProposal(args),
-    downvoteProposal: (_, args) => downvoteProposal(args)
+    downvoteProposal: (_, args) => downvoteProposal(args),
   }
 };
 
