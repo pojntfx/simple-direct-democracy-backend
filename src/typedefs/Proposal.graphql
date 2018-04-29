@@ -8,7 +8,7 @@ type Proposal {
 }
 
 type Query {
-  getProposal(id: String!): Proposal
+  allProposals: [Proposal!]!
 }
 
 type Mutation {
