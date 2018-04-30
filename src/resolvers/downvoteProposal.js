@@ -11,7 +11,7 @@ export const downvoteProposal = async ({ id }) =>
       err
         ? console.log(err)
         : pubsub.publish(UPDATED_PROPOSAL_TOPIC, {
-          updatedProposals: allProposals()
+            updatedProposals: allProposals()
           }),
         proposal;
     }

@@ -12,7 +12,7 @@ type Query {
 }
 
 type Mutation {
-  createProposal(text: String!, author: String!): Proposal!
+  createProposal(text: String!, author: String!): Proposal
   upvoteProposal(id: String!): Proposal!
   downvoteProposal(id: String!): Proposal!
 }
