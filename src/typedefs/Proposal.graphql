@@ -18,5 +18,5 @@ type Mutation {
 }
 
 type Subscription {
-  updatedProposal: [Proposal!]!
+  updatedProposals: [Proposal!]!
 }
