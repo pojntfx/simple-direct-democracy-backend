@@ -1,4 +1,6 @@
 import { Proposal } from "../models/Proposal";
+import { pubsub, UPDATED_PROPOSAL_TOPIC } from "../index";
+import { allProposals } from "../resolvers/allProposals";
 
 export const createProposal = ({ text, author }) => {
   const newProposal = new Proposal({
@@ -10,6 +12,10 @@ export const createProposal = ({ text, author }) => {
   });
 
   newProposal.save();
+
+  pubsub.publish(UPDATED_PROPOSAL_TOPIC, {
+    updatedProposal: allProposals()
+  });
 
   return {
     text: newProposal.text,
