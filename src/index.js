@@ -2,7 +2,7 @@ import { GraphQLServer } from "graphql-yoga";
 import mongoose from "mongoose";
 import path from "path";
 import { fileLoader, mergeTypes } from "merge-graphql-schemas";
-import { PubSub } from "graphql-subscriptions";
+import { PubSub, withFilter } from "graphql-subscriptions";
 import { createProposal } from "./resolvers/createProposal";
 import { upvoteProposal } from "./resolvers/upvoteProposal";
 import { downvoteProposal } from "./resolvers/downvoteProposal";
@@ -10,7 +10,7 @@ import { allProposals } from "./resolvers/allProposals";
 
 const dbPort = 27017;
 const serverPort = 3000;
-export const UPDATED_PROPOSAL_TOPIC = "updated_proposal";
+export const UPDATED_PROPOSAL_TOPIC = "updated_proposals";
 
 const typeDefs = fileLoader(path.join(__dirname, "./typedefs"));
 
@@ -24,7 +24,7 @@ const resolvers = {
     downvoteProposal: (_, args) => downvoteProposal(args)
   },
   Subscription: {
-    updatedProposal: {
+    updatedProposals: {
       subscribe: () => pubsub.asyncIterator(UPDATED_PROPOSAL_TOPIC)
     }
   }

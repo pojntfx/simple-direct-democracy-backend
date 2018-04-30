@@ -14,7 +14,7 @@ export const createProposal = ({ text, author }) => {
   newProposal.save();
 
   pubsub.publish(UPDATED_PROPOSAL_TOPIC, {
-    updatedProposal: allProposals()
+    updatedProposals: allProposals()
   });
 
   return {
