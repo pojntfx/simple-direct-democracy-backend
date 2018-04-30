@@ -16,3 +16,7 @@ type Mutation {
   upvoteProposal(id: String!): Proposal!
   downvoteProposal(id: String!): Proposal!
 }
+
+type Subscription {
+  updatedProposal: [Proposal!]!
+}
