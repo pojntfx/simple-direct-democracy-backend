@@ -30,6 +30,9 @@ const resolvers = {
   }
 };
 
+// Enable error handling
+require("events").EventEmitter.prototype._maxListeners = 100;
+
 // Connect to the db
 mongoose.connect(`mongodb://127.0.0.1:${dbPort}`);
 

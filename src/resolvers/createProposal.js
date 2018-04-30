@@ -25,20 +25,20 @@ export const createProposal = ({ text, author }) => {
         }
       })
       .catch(error => {
-        const MulitpleIdenticalErrorProposalsError = createError(
-          "MulitpleIdenticalErrorProposalsError",
+        const MultipleIdenticalErrorProposalsError = createError(
+          "MultipleIdenticalErrorProposalsError",
           {
             message: error
           }
         );
-        throw new MulitpleIdenticalErrorProposalsError();
+        throw new MultipleIdenticalErrorProposalsError();
       });
   } else {
-    const NoTextOrAuthorInfo = createError("NoTextOrAuthorInfoError", {
+    const NoTextOrAuthorInfoError = createError("NoTextOrAuthorInfoError", {
       message:
         "You can't create an empty proposal or create one without your IP"
     });
-    throw new MulitpleIdenticalErrorProposalsError();
+    throw new MultipleIdenticalErrorProposalsError();
   }
 };
 

@@ -13,8 +13,8 @@ type Query {
 
 type Mutation {
   createProposal(text: String!, author: String!): Proposal
-  upvoteProposal(id: String!): Proposal!
-  downvoteProposal(id: String!): Proposal!
+  upvoteProposal(id: String!, author: String!): Proposal
+  downvoteProposal(id: String!, author: String!): Proposal
 }
 
 type Subscription {
