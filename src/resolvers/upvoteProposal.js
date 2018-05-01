@@ -21,7 +21,7 @@ export const upvoteProposal = async ({ id, author }) => {
         !(res.author === author) && !res.upvoters.includes(author)
           ? Proposal.findOneAndUpdate(
               { _id: id },
-              { $inc: { votes: -1 }, $push: { upvoters: author } },
+              { $inc: { votes: 1 }, $push: { upvoters: author } },
               { new: true },
               (err, proposal) => {
                 err
