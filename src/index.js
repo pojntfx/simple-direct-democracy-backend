@@ -7,16 +7,19 @@ import { createProposal } from "./resolvers/createProposal";
 import { upvoteProposal } from "./resolvers/upvoteProposal";
 import { downvoteProposal } from "./resolvers/downvoteProposal";
 import { allProposals } from "./resolvers/allProposals";
+import { allProposalsReversed } from "./resolvers/allProposalsReversed";
 
 const dbPort = 27017;
 const serverPort = 3000;
 export const UPDATED_PROPOSAL_TOPIC = "updated_proposals";
+export const UPDATED_PROPOSAL_TOPIC_REVERSED = "updated_proposals_reversed";
 
 const typeDefs = fileLoader(path.join(__dirname, "./typedefs"));
 
 const resolvers = {
   Query: {
-    allProposals: () => allProposals()
+    allProposals: () => allProposals(),
+    allProposalsReversed: () => allProposalsReversed()
   },
   Mutation: {
     createProposal: (_, args) => createProposal(args),
@@ -26,6 +29,9 @@ const resolvers = {
   Subscription: {
     updatedProposals: {
       subscribe: () => pubsub.asyncIterator(UPDATED_PROPOSAL_TOPIC)
+    },
+    updatedProposalsReversed: {
+      subscribe: () => pubsub.asyncIterator(UPDATED_PROPOSAL_TOPIC_REVERSED)
     }
   }
 };

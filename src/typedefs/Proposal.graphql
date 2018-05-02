@@ -9,6 +9,7 @@ type Proposal {
 
 type Query {
   allProposals: [Proposal!]!
+  allProposalsReversed: [Proposal!]!
 }
 
 type Mutation {
@@ -19,4 +20,5 @@ type Mutation {
 
 type Subscription {
   updatedProposals: [Proposal!]!
+  updatedProposalsReversed: [Proposal!]!
 }

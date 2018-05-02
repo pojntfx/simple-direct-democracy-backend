@@ -1,7 +1,12 @@
 import { Proposal } from "../models/Proposal";
-import { pubsub, UPDATED_PROPOSAL_TOPIC } from "../index";
+import {
+  pubsub,
+  UPDATED_PROPOSAL_TOPIC,
+  UPDATED_PROPOSAL_TOPIC_REVERSED
+} from "../index";
 import { allProposals } from "../resolvers/allProposals";
 import { createError } from "apollo-errors";
+import { allProposalsReversed } from "./allProposalsReversed";
 
 export const upvoteProposal = async ({ id, author }) => {
   try {
@@ -24,12 +29,17 @@ export const upvoteProposal = async ({ id, author }) => {
               { $inc: { votes: 1 }, $push: { upvoters: author } },
               { new: true },
               (err, proposal) => {
-                err
-                  ? console.log(err)
-                  : pubsub.publish(UPDATED_PROPOSAL_TOPIC, {
-                      updatedProposals: allProposals()
-                    }),
-                  proposal;
+                if (err) {
+                  console.log(err);
+                } else {
+                  pubsub.publish(UPDATED_PROPOSAL_TOPIC, {
+                    updatedProposals: allProposals()
+                  });
+                  pubsub.publish(UPDATED_PROPOSAL_TOPIC_REVERSED, {
+                    updatedProposalsReversed: allProposalsReversed()
+                  });
+                  return proposal;
+                }
               }
             )
           : Promise.reject(
