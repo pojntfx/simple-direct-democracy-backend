@@ -35,6 +35,6 @@
     "graphql-subscriptions": "^0.5.8",
     "graphql-yoga": "^1.9.2",
     "merge-graphql-schemas": "^1.5.1",
-    "mongoose": "^5.0.16"
+    "mongoose": "^5.7.5"
   }
 }
